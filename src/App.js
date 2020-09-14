@@ -1,10 +1,13 @@
 import React from 'react';
+import { Route } from 'react-router-dom';
+
+import Home from './containers/Home';
 
 function App() {
   return (
-    <div>
-      slkdfjsl
-    </div>
+    <React.Fragment>
+      <Route path={'/'} component={Home} />
+    </React.Fragment>
   );
 }
 
