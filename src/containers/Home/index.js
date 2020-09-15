@@ -1,58 +1,59 @@
-import React from 'react';
-import { AppBar, Toolbar, makeStyles, Slide, useScrollTrigger } from '@material-ui/core';
+import React, { useState } from 'react';
+import { Button, Typography, Container, Grid, Divider, IconButton, SwipeableDrawer } from '@material-ui/core';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import MenuIcon from '@material-ui/icons/Menu';
 
-const useStyles = makeStyles(theme => ({
-  offset: theme.mixins.toolbar,
-  profileImage: {
-    width: "180px",
-    height: "180px",
-    borderRadius: "100%"
-  }
-}))
-
-function HideOnScroll(props) {
-  const { children, window } = props;
-  const trigger = useScrollTrigger({ target: window ? window() : undefined, threshold: 50 });
-
-  return (
-    <Slide appear={false} direction="down" in={!trigger}>
-      {children}
-    </Slide>
-  );
-}
+import homeStyles from './styles';
 
 const Home = (props) => {
-  const classes = useStyles();
+  const [drawerStatus, toggleDrawerStatus] = useState(false)
+  const classes = homeStyles();
   return (
     <React.Fragment>
-      <HideOnScroll {...props}>
-        <AppBar position="fixed">
-          <img src="images/profile.jpg"
-            className={classes.profileImage}
-            alt="James Lee" />
-        </AppBar>
-      </HideOnScroll>
-      <div className={classes.offset}>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce volutpat sem in elementum auctor. Curabitur fermentum condimentum iaculis. Curabitur sit amet hendrerit magna. Donec euismod lorem at nisl gravida, sit amet varius augue tincidunt. Nunc et hendrerit arcu, quis rhoncus tellus. Aliquam sollicitudin dictum justo. Integer augue arcu, tincidunt at aliquet non, congue nec mauris. Integer consequat tincidunt justo, in dapibus libero. Phasellus laoreet aliquam cursus. Vivamus accumsan sed urna vitae semper. Cras egestas aliquet purus, ut molestie turpis vulputate et. Phasellus mauris nibh, interdum a blandit ac, imperdiet a elit.</p>
-
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce volutpat sem in elementum auctor. Curabitur fermentum condimentum iaculis. Curabitur sit amet hendrerit magna. Donec euismod lorem at nisl gravida, sit amet varius augue tincidunt. Nunc et hendrerit arcu, quis rhoncus tellus. Aliquam sollicitudin dictum justo. Integer augue arcu, tincidunt at aliquet non, congue nec mauris. Integer consequat tincidunt justo, in dapibus libero. Phasellus laoreet aliquam cursus. Vivamus accumsan sed urna vitae semper. Cras egestas aliquet purus, ut molestie turpis vulputate et. Phasellus mauris nibh, interdum a blandit ac, imperdiet a elit.</p>
-
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce volutpat sem in elementum auctor. Curabitur fermentum condimentum iaculis. Curabitur sit amet hendrerit magna. Donec euismod lorem at nisl gravida, sit amet varius augue tincidunt. Nunc et hendrerit arcu, quis rhoncus tellus. Aliquam sollicitudin dictum justo. Integer augue arcu, tincidunt at aliquet non, congue nec mauris. Integer consequat tincidunt justo, in dapibus libero. Phasellus laoreet aliquam cursus. Vivamus accumsan sed urna vitae semper. Cras egestas aliquet purus, ut molestie turpis vulputate et. Phasellus mauris nibh, interdum a blandit ac, imperdiet a elit.</p>
-
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce volutpat sem in elementum auctor. Curabitur fermentum condimentum iaculis. Curabitur sit amet hendrerit magna. Donec euismod lorem at nisl gravida, sit amet varius augue tincidunt. Nunc et hendrerit arcu, quis rhoncus tellus. Aliquam sollicitudin dictum justo. Integer augue arcu, tincidunt at aliquet non, congue nec mauris. Integer consequat tincidunt justo, in dapibus libero. Phasellus laoreet aliquam cursus. Vivamus accumsan sed urna vitae semper. Cras egestas aliquet purus, ut molestie turpis vulputate et. Phasellus mauris nibh, interdum a blandit ac, imperdiet a elit.</p>
-
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce volutpat sem in elementum auctor. Curabitur fermentum condimentum iaculis. Curabitur sit amet hendrerit magna. Donec euismod lorem at nisl gravida, sit amet varius augue tincidunt. Nunc et hendrerit arcu, quis rhoncus tellus. Aliquam sollicitudin dictum justo. Integer augue arcu, tincidunt at aliquet non, congue nec mauris. Integer consequat tincidunt justo, in dapibus libero. Phasellus laoreet aliquam cursus. Vivamus accumsan sed urna vitae semper. Cras egestas aliquet purus, ut molestie turpis vulputate et. Phasellus mauris nibh, interdum a blandit ac, imperdiet a elit.</p>
-
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce volutpat sem in elementum auctor. Curabitur fermentum condimentum iaculis. Curabitur sit amet hendrerit magna. Donec euismod lorem at nisl gravida, sit amet varius augue tincidunt. Nunc et hendrerit arcu, quis rhoncus tellus. Aliquam sollicitudin dictum justo. Integer augue arcu, tincidunt at aliquet non, congue nec mauris. Integer consequat tincidunt justo, in dapibus libero. Phasellus laoreet aliquam cursus. Vivamus accumsan sed urna vitae semper. Cras egestas aliquet purus, ut molestie turpis vulputate et. Phasellus mauris nibh, interdum a blandit ac, imperdiet a elit.</p>
-
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce volutpat sem in elementum auctor. Curabitur fermentum condimentum iaculis. Curabitur sit amet hendrerit magna. Donec euismod lorem at nisl gravida, sit amet varius augue tincidunt. Nunc et hendrerit arcu, quis rhoncus tellus. Aliquam sollicitudin dictum justo. Integer augue arcu, tincidunt at aliquet non, congue nec mauris. Integer consequat tincidunt justo, in dapibus libero. Phasellus laoreet aliquam cursus. Vivamus accumsan sed urna vitae semper. Cras egestas aliquet purus, ut molestie turpis vulputate et. Phasellus mauris nibh, interdum a blandit ac, imperdiet a elit.</p>
-
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce volutpat sem in elementum auctor. Curabitur fermentum condimentum iaculis. Curabitur sit amet hendrerit magna. Donec euismod lorem at nisl gravida, sit amet varius augue tincidunt. Nunc et hendrerit arcu, quis rhoncus tellus. Aliquam sollicitudin dictum justo. Integer augue arcu, tincidunt at aliquet non, congue nec mauris. Integer consequat tincidunt justo, in dapibus libero. Phasellus laoreet aliquam cursus. Vivamus accumsan sed urna vitae semper. Cras egestas aliquet purus, ut molestie turpis vulputate et. Phasellus mauris nibh, interdum a blandit ac, imperdiet a elit.</p>
-
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce volutpat sem in elementum auctor. Curabitur fermentum condimentum iaculis. Curabitur sit amet hendrerit magna. Donec euismod lorem at nisl gravida, sit amet varius augue tincidunt. Nunc et hendrerit arcu, quis rhoncus tellus. Aliquam sollicitudin dictum justo. Integer augue arcu, tincidunt at aliquet non, congue nec mauris. Integer consequat tincidunt justo, in dapibus libero. Phasellus laoreet aliquam cursus. Vivamus accumsan sed urna vitae semper. Cras egestas aliquet purus, ut molestie turpis vulputate et. Phasellus mauris nibh, interdum a blandit ac, imperdiet a elit.</p>
-
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce volutpat sem in elementum auctor. Curabitur fermentum condimentum iaculis. Curabitur sit amet hendrerit magna. Donec euismod lorem at nisl gravida, sit amet varius augue tincidunt. Nunc et hendrerit arcu, quis rhoncus tellus. Aliquam sollicitudin dictum justo. Integer augue arcu, tincidunt at aliquet non, congue nec mauris. Integer consequat tincidunt justo, in dapibus libero. Phasellus laoreet aliquam cursus. Vivamus accumsan sed urna vitae semper. Cras egestas aliquet purus, ut molestie turpis vulputate et. Phasellus mauris nibh, interdum a blandit ac, imperdiet a elit.</p>
-      </div>
+      <Container className={classes.rootContainer} maxWidth={false}>
+        <div className={classes.drawerIcon}>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            edge="end"
+            onClick={() => toggleDrawerStatus(true)}
+          >
+            <MenuIcon />
+          </IconButton>
+        </div>
+        <Grid container className={classes.containerGrid} justify={'center'}>
+          <Grid item lg={2} md={2} sm={12} className={classes.profileImageGrid}>
+            <img src="images/profile.jpg" className={classes.profileImage} alt="Narottam Singh Bisht" />
+          </Grid>
+          <Grid item lg={4} md={4} sm={12} className={classes.headerIntro}>
+            <Typography variant="h4" className={classes.profileIntroName}>
+              Narottam Singh
+            </Typography>
+            <Typography variant="h5" className={classes.profileIntroSpacing}>
+              Fullstack Developer
+            </Typography>
+            <Typography variant="h5" className={classes.profileIntroSpacing}>
+              Narottam Singh
+            </Typography>
+          </Grid>
+          <Grid item lg={6} md={6} sm={12} style={{ alignSelf: 'center', textAlign: 'end' }}>
+            <Button className={classes.downloadCvButton}>Download CV</Button>
+          </Grid>
+        </Grid>
+        <SwipeableDrawer
+          anchor="right"
+          open={drawerStatus}
+          onClose={() => toggleDrawerStatus(false)}
+          onOpen={() => toggleDrawerStatus(true)}
+        >
+          <div className={classes.drawerHeader}>
+            <IconButton onClick={() => toggleDrawerStatus(false)}>
+              <ChevronRightIcon />
+            </IconButton>
+          </div>
+          <Divider />
+        </SwipeableDrawer>
+      </Container>
     </React.Fragment>
   )
 }
