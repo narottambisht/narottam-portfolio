@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
-import { Button, Typography, Container, Grid, Divider, IconButton, SwipeableDrawer } from '@material-ui/core';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import React, { useState, useContext } from 'react';
+import { Button, Typography, Container, Grid, IconButton } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
-
+import { RootContext } from '../../context/RootContext';
 import homeStyles from './styles';
 
+import Drawer from '../../components/Drawer';
+
 const Home = (props) => {
-  const [drawerStatus, toggleDrawerStatus] = useState(false)
+  const [rootStore, setRootStore] = useContext(RootContext);
   const classes = homeStyles();
+
   return (
     <React.Fragment>
       <Container className={classes.rootContainer} maxWidth={false}>
@@ -16,7 +18,7 @@ const Home = (props) => {
             color="inherit"
             aria-label="open drawer"
             edge="end"
-            onClick={() => toggleDrawerStatus(true)}
+            onClick={() => setRootStore({ ...rootStore, drawerOpen: true })}
           >
             <MenuIcon />
           </IconButton>
@@ -40,19 +42,7 @@ const Home = (props) => {
             <Button className={classes.downloadCvButton}>Download CV</Button>
           </Grid>
         </Grid>
-        <SwipeableDrawer
-          anchor="right"
-          open={drawerStatus}
-          onClose={() => toggleDrawerStatus(false)}
-          onOpen={() => toggleDrawerStatus(true)}
-        >
-          <div className={classes.drawerHeader}>
-            <IconButton onClick={() => toggleDrawerStatus(false)}>
-              <ChevronRightIcon />
-            </IconButton>
-          </div>
-          <Divider />
-        </SwipeableDrawer>
+        <Drawer />
       </Container>
     </React.Fragment>
   )
