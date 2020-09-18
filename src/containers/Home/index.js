@@ -60,10 +60,10 @@ const Home = (props) => {
                 <Chip label="MERN Stack" />
                 <Chip label="React.Js" />
                 <Chip label="Redux" />
+                <Chip label="Context-API" />
                 <Chip label="Redux-Saga" />
                 <Chip label="GIT" />
                 <Chip label="AWS EC2" />
-                <Chip label="" />
               </div>
             </Card>
           </Grid>

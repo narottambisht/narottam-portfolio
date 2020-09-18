@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Button, Typography, Container, Grid, IconButton, CssBaseline, Tooltip } from '@material-ui/core';
 import { Route } from 'react-router-dom';
 
@@ -6,10 +6,17 @@ import Drawer from './Drawer';
 import Home from '../containers/Home';
 import { headerStyles } from './style';
 import MyWork from '../containers/MyWork';
+import { firestoreDB } from '../utils/FirebaseConfig';
 import { RootContext } from '../context/RootContext';
 import { MenuIcon, FacebookIcon, TwitterIcon, GitHubIcon, LinkedInIcon, InstagramIcon } from '../utils/MaterialIcons';
 
 const Header = props => {
+  useEffect(() => {
+    firestoreDB.collection('portfolio-info').onSnapshot(snapshot => {
+      snapshot.docs.map(doc => console.log('doc', doc.data()));
+    });
+  }, []);
+
   const [rootStore, setRootStore] = useContext(RootContext);
 
   const classes = headerStyles();
