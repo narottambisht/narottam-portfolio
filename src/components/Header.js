@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import { Button, Typography, Container, Grid, IconButton, CssBaseline, Tooltip } from '@material-ui/core';
+import { Typography, Container, Grid, IconButton, CssBaseline, Tooltip } from '@material-ui/core';
 import { Route } from 'react-router-dom';
 
 import Drawer from './Drawer';
@@ -8,16 +8,18 @@ import { headerStyles } from './style';
 import MyWork from '../containers/MyWork';
 import { firestoreDB } from '../utils/FirebaseConfig';
 import { RootContext } from '../context/RootContext';
+import { PortfolioInfoContext } from '../context/PortfolioInfoContext';
 import { MenuIcon, FacebookIcon, TwitterIcon, GitHubIcon, LinkedInIcon, InstagramIcon } from '../utils/MaterialIcons';
 
 const Header = props => {
+  const [rootStore, setRootStore] = useContext(RootContext);
+  const [portfolioInfoStore, setPortfolioInfoStore] = useContext(PortfolioInfoContext);
+
   useEffect(() => {
     firestoreDB.collection('portfolio-info').onSnapshot(snapshot => {
-      snapshot.docs.map(doc => console.log('doc', doc.data()));
+      snapshot.docs.map(doc => setPortfolioInfoStore(doc.data()));
     });
   }, []);
-
-  const [rootStore, setRootStore] = useContext(RootContext);
 
   const classes = headerStyles();
 
@@ -44,32 +46,32 @@ const Header = props => {
               Hey 👋 Welcome
               <span role="img" aria-label="welcome-emoji"> 🤓</span>,
               <br />
-              I'm NAROTTAM SINGH
+              I'm <strong>{portfolioInfoStore.name}</strong>
               <span role="img" aria-label="name-emoji">🕺🙇‍♂️</span>
             </Typography>
-            <Typography variant="h5" className={classes.profileIntroSpacing}>
-              Coder 💻| Freelancer 👷🏻| Traveller <span role="img" aria-label="designation-emoji">✈️</span>
+            <Typography variant="h6" className={classes.profileIntroSpacing}>
+              {portfolioInfoStore.achievements}
             </Typography>
             <div>
               <Tooltip title="Connect with me on Facebook">
-                <IconButton edge={'start'}><FacebookIcon /></IconButton>
+                <IconButton edge={'start'} onClick={() => window.open(portfolioInfoStore.facebook_profile_link)}><FacebookIcon /></IconButton>
               </Tooltip>
-              <Tooltip title="Follow me on my twitter handle @narottam_bisht">
-                <IconButton><TwitterIcon /></IconButton>
+              <Tooltip title="Follow me on my twitter handle">
+                <IconButton onClick={() => window.open(portfolioInfoStore.twitter_profile_link)}><TwitterIcon /></IconButton>
               </Tooltip>
               <Tooltip title="Checkout my Github profile">
-                <IconButton><GitHubIcon /></IconButton>
+                <IconButton onClick={() => window.open(portfolioInfoStore.github_profile_link)}><GitHubIcon /></IconButton>
               </Tooltip>
               <Tooltip title="Connect with me on my LinkedIn page">
-                <IconButton><LinkedInIcon /></IconButton>
+                <IconButton onClick={() => window.open(portfolioInfoStore.linkedin_profile_link)}><LinkedInIcon /></IconButton>
               </Tooltip>
-              <Tooltip title="Connect with me on my LinkedIn page">
-                <IconButton><InstagramIcon /></IconButton>
+              <Tooltip title="Follow me on my Instagram profile">
+                <IconButton onClick={() => window.open(portfolioInfoStore.instagram_profile_link)}><InstagramIcon /></IconButton>
               </Tooltip>
             </div>
           </Grid>
           <Grid item lg={3} md={3} sm={12} />
-          <Grid item lg={2} md={3} sm={12} justify={'center'} className={classes.downloadCvGrid}>
+          <Grid item lg={2} md={3} sm={12} className={classes.downloadCvGrid}>
             <div className={classes.lottieAnimationDiv} id="lottie"></div>
           </Grid>
         </Grid>

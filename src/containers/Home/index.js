@@ -1,15 +1,27 @@
 import React, { useEffect, useContext } from 'react';
 import lottie from 'lottie-web';
-import { Grid, IconButton, CssBaseline, Card, Chip, CardContent, CardHeader, Divider } from '@material-ui/core';
+import { Grid, Card, Chip, CardContent, CardHeader, Divider } from '@material-ui/core';
 
 import homeStyles from './styles';
-import Header from '../../components/Header';
+import { firestoreDB } from '../../utils/FirebaseConfig';
+import { SkillsContext } from '../../context/SkillsContext';
+import { PortfolioInfoContext } from '../../context/PortfolioInfoContext';
 
 const Home = (props) => {
+  const [skills, setSkills] = useContext(SkillsContext);
+  const [portfolioInfoStore, setPortfolioInfoStore] = useContext(PortfolioInfoContext);
 
   const classes = homeStyles();
 
   useEffect(() => {
+    firestoreDB.collection('skills').onSnapshot(snapshot => {
+      setSkills(snapshot.docs.map(doc => doc.data()));
+    });
+
+    firestoreDB.collection('skills').onSnapshot(snapshot => {
+      setSkills(snapshot.docs.map(doc => doc.data()));
+    });
+
     lottie.loadAnimation({
       container: document.getElementById('lottie'),
       renderer: 'svg',
@@ -22,23 +34,38 @@ const Home = (props) => {
   return (
     <React.Fragment>
       <Grid container spacing={2} className={classes.containerGrid}>
-        <Grid item lg={8} sm={12} spacing={2}>
-          <Grid item>
+        <Grid item lg={8} sm={12}>
+          <Grid item lg={12} sm={12} style={{marginBottom: 15}}>
             <Card>
-              <CardHeader title={'🕴️ ABOUT ME'} />
+              <CardHeader title={'🕴️ PROFILE'} />
               <Divider />
               <CardContent style={{ textAlign: 'justify' }}>
-                <li>Energetic, results-oriented software engineer with 2+ years of experience in software development industry.</li>
-                <li>A diligent and avid team player who never backs down. A person with a passion for coding and learning new technologies and frameworks.</li>
-                <li>In the past 2 years I had exposure to variety of javascript frameworks like NodeJs, ReactJs, Redux, Redux Saga, Sequelize, Mongoose, PassportJs and GIT with which I have worked on many web applications both front-end and back-end.</li>
-                <li>Currently I am learning Python as well because it intrigues me how much this language can do. I have excellent comm. Skills.</li>
-                <li>I have been awarded best student of the year award in my college as well.</li>
-                <li>As of now I am looking for a job in a good company where I can hone my skills and have a friendly, co-operative, chill and a relaxing work enviornment. Once I get it beers on me.</li>
+                {portfolioInfoStore.profile && portfolioInfoStore.profile.length > 0 && portfolioInfoStore.profile.map(_profile => {
+                  return (
+                    <React.Fragment>
+                      <span>{_profile}</span>
+                      <br />
+                    </React.Fragment>
+                  )
+                })}
               </CardContent>
             </Card>
           </Grid>
-          <Grid item>
-            <Card>dfdff</Card>
+          <Grid item lg={12} sm={12}>
+            <Card>
+              <CardHeader title={'🕴️ WORK EXPERIENCE'} />
+              <Divider />
+              <CardContent style={{ textAlign: 'justify' }}>
+                {portfolioInfoStore.profile && portfolioInfoStore.profile.length > 0 && portfolioInfoStore.profile.map(_profile => {
+                  return (
+                    <React.Fragment>
+                      <span>{_profile}</span>
+                      <br />
+                    </React.Fragment>
+                  )
+                })}
+              </CardContent>
+            </Card>
           </Grid>
         </Grid>
         <Grid item lg={4} sm={12}>
@@ -47,29 +74,31 @@ const Home = (props) => {
               <CardHeader title={'🛠 SKILLS'} />
               <Divider />
               <CardContent style={{ textAlign: 'justify' }}>
-                Coding has been my passion from college times and till now my technology stack has been mostly javascript and its frameworks. I have worked on both backend and frontend frameworks. I have handled projects from Requirement Analysis then Design then Implementation of Database schema design and backend and frontend archtecture then testing then deployment and maintainance using AWS EC2 instances.
+                {portfolioInfoStore.skills_description}
               </CardContent>
               <Divider />
-              <div className={classes.skillsSection}>
-                <Chip label="Node.Js" />
-                <Chip label="Express.Js" />
-                <Chip label="Rest API" />
-                <Chip label="Firebase" />
-                <Chip label="MongoDb" />
-                <Chip label="MySQL" />
-                <Chip label="MERN Stack" />
-                <Chip label="React.Js" />
-                <Chip label="Redux" />
-                <Chip label="Context-API" />
-                <Chip label="Redux-Saga" />
-                <Chip label="GIT" />
-                <Chip label="AWS EC2" />
+              <div style={{ marginLeft: 10, marginRight: 10 }}>
+                {skills &&
+                  skills.length > 0 &&
+                  skills.map(skill => {
+                    return (
+                      <React.Fragment>
+                        <p style={{ textAlign: 'center' }}>{skill.skill_category}</p>
+                        <div className={classes.skillsSection}>
+                          {skill.skills_array.map(_skill => {
+                            return (
+                              <Chip color="primary" label={_skill.skill_name} />
+                            )
+                          })}
+                        </div>
+                        <Divider />
+                      </React.Fragment>
+                    )
+                  })
+                }
               </div>
             </Card>
           </Grid>
-          <Grid item>
-          <Card>dfdff</Card>
-        </Grid>
         </Grid>
       </Grid>
     </React.Fragment>
