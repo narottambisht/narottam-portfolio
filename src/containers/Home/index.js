@@ -1,16 +1,20 @@
-import React, { useEffect, useContext } from 'react';
+import moment from 'moment';
 import lottie from 'lottie-web';
+import { Rating } from '@material-ui/lab';
+import React, { useEffect, useContext } from 'react';
 import { Grid, Card, Chip, CardContent, CardHeader, Divider } from '@material-ui/core';
 
 import homeStyles from './styles';
 import { firestoreDB } from '../../utils/FirebaseConfig';
 import { SkillsContext } from '../../context/SkillsContext';
 import { PortfolioInfoContext } from '../../context/PortfolioInfoContext';
+import { WorkExperienceContext } from '../../context/WorkExperienceContext';
+import { StarBorderIcon } from '../../utils/MaterialIcons';
 
 const Home = (props) => {
   const [skills, setSkills] = useContext(SkillsContext);
+  const [workExperience, setWorkExperience] = useContext(WorkExperienceContext);
   const [portfolioInfoStore, setPortfolioInfoStore] = useContext(PortfolioInfoContext);
-
   const classes = homeStyles();
 
   useEffect(() => {
@@ -18,8 +22,9 @@ const Home = (props) => {
       setSkills(snapshot.docs.map(doc => doc.data()));
     });
 
-    firestoreDB.collection('skills').onSnapshot(snapshot => {
-      setSkills(snapshot.docs.map(doc => doc.data()));
+    firestoreDB.collection('work_experience').onSnapshot(snapshot => {
+      let workExperience = snapshot.docs.reverse();
+      setWorkExperience(workExperience.map(doc => doc.data()));
     });
 
     lottie.loadAnimation({
@@ -35,7 +40,7 @@ const Home = (props) => {
     <React.Fragment>
       <Grid container spacing={2} className={classes.containerGrid}>
         <Grid item lg={8} sm={12}>
-          <Grid item lg={12} sm={12} style={{marginBottom: 15}}>
+          <Grid item lg={12} sm={12} style={{ marginBottom: 15 }}>
             <Card>
               <CardHeader title={'🕴️ PROFILE'} />
               <Divider />
@@ -53,14 +58,25 @@ const Home = (props) => {
           </Grid>
           <Grid item lg={12} sm={12}>
             <Card>
-              <CardHeader title={'🕴️ WORK EXPERIENCE'} />
+              <CardHeader title={'👨‍💻 WORK EXPERIENCE'} />
               <Divider />
               <CardContent style={{ textAlign: 'justify' }}>
-                {portfolioInfoStore.profile && portfolioInfoStore.profile.length > 0 && portfolioInfoStore.profile.map(_profile => {
+                {workExperience.length > 0 && workExperience.reverse().map((_workExperience, index) => {
                   return (
                     <React.Fragment>
-                      <span>{_profile}</span>
-                      <br />
+                      <div>
+                        <strong>
+                          {_workExperience.designation} - &nbsp;
+                          <a style={{ color: 'inherit', marginRight: 5 }}
+                            target="_blank"
+                            href={_workExperience.website}>
+                            {_workExperience.company_name}
+                          </a>
+                          ({moment(_workExperience.start_date.toDate()).format('MMM YYYY')} - {_workExperience.end_date ? moment(_workExperience.end_date.toDate()).format('MMM YYYY') : "Current"})
+                        </strong>
+                        <div dangerouslySetInnerHTML={{ __html: _workExperience.job_description }} />
+                      </div>
+                      {index + 1 !== workExperience.length && <Divider style={{ marginBottom: 10 }} />}
                     </React.Fragment>
                   )
                 })}
@@ -69,7 +85,7 @@ const Home = (props) => {
           </Grid>
         </Grid>
         <Grid item lg={4} sm={12}>
-          <Grid item>
+          <Grid item style={{ marginBottom: 15 }}>
             <Card>
               <CardHeader title={'🛠 SKILLS'} />
               <Divider />
@@ -80,7 +96,7 @@ const Home = (props) => {
               <div style={{ marginLeft: 10, marginRight: 10 }}>
                 {skills &&
                   skills.length > 0 &&
-                  skills.map(skill => {
+                  skills.map((skill, index) => {
                     return (
                       <React.Fragment>
                         <p style={{ textAlign: 'center' }}>{skill.skill_category}</p>
@@ -91,12 +107,39 @@ const Home = (props) => {
                             )
                           })}
                         </div>
-                        <Divider />
+                        {index + 1 !== skill.length && <Divider />}
                       </React.Fragment>
                     )
                   })
                 }
               </div>
+            </Card>
+          </Grid>
+          <Grid item>
+            <Card>
+              <CardHeader title={'🌏 LANGUAGES'} />
+              <Divider />
+              <CardContent>
+                <div style={{ display: 'grid' }}>
+                  <span><strong>English:</strong> Full Professional Fluency</span>
+                  <Rating
+                    name="customized-empty"
+                    defaultValue={5}
+                    precision={0.5}
+                    emptyIcon={<StarBorderIcon fontSize="inherit" />}
+                  />
+                </div>
+                <Divider style={{ marginTop: 10, marginBottom: 10 }} />
+                <div style={{ display: 'grid' }}>
+                  <span><strong>Hindi:</strong> Native Speaker</span>
+                  <Rating
+                    name="customized-empty"
+                    defaultValue={5}
+                    precision={0.5}
+                    emptyIcon={<StarBorderIcon fontSize="inherit" />}
+                  />
+                </div>
+              </CardContent>
             </Card>
           </Grid>
         </Grid>

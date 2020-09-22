@@ -5,8 +5,9 @@ import { BrowserRouter } from 'react-router-dom';
 import './index.css'
 import App from './App';
 import { RootContextProvider } from './context/RootContext';
-import { PortfolioInfoContextProvider } from './context/PortfolioInfoContext';
 import { SkillsContextProvider } from './context/SkillsContext';
+import { PortfolioInfoContextProvider } from './context/PortfolioInfoContext';
+import { WorkExperienceContextProvider } from './context/WorkExperienceContext';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -14,7 +15,9 @@ ReactDOM.render(
       <RootContextProvider>
         <PortfolioInfoContextProvider>
           <SkillsContextProvider>
-            <App />
+            <WorkExperienceContextProvider>
+              <App />
+            </WorkExperienceContextProvider>
           </SkillsContextProvider>
         </PortfolioInfoContextProvider>
       </RootContextProvider>
