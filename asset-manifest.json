@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/narottam-portfolio/static/css/main.a1270b51.chunk.css",
+    "main.js": "/narottam-portfolio/static/js/main.4f5e8927.chunk.js",
+    "main.js.map": "/narottam-portfolio/static/js/main.4f5e8927.chunk.js.map",
+    "runtime-main.js": "/narottam-portfolio/static/js/runtime-main.7736b836.js",
+    "runtime-main.js.map": "/narottam-portfolio/static/js/runtime-main.7736b836.js.map",
+    "static/js/2.62b79ad5.chunk.js": "/narottam-portfolio/static/js/2.62b79ad5.chunk.js",
+    "static/js/2.62b79ad5.chunk.js.map": "/narottam-portfolio/static/js/2.62b79ad5.chunk.js.map",
+    "index.html": "/narottam-portfolio/index.html",
+    "precache-manifest.dd9fdd401ed77f81309a4cc8d268e0e5.js": "/narottam-portfolio/precache-manifest.dd9fdd401ed77f81309a4cc8d268e0e5.js",
+    "service-worker.js": "/narottam-portfolio/service-worker.js",
+    "static/css/main.a1270b51.chunk.css.map": "/narottam-portfolio/static/css/main.a1270b51.chunk.css.map",
+    "static/js/2.62b79ad5.chunk.js.LICENSE.txt": "/narottam-portfolio/static/js/2.62b79ad5.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.7736b836.js",
+    "static/js/2.62b79ad5.chunk.js",
+    "static/css/main.a1270b51.chunk.css",
+    "static/js/main.4f5e8927.chunk.js"
+  ]
+}
