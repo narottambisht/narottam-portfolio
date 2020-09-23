@@ -10,6 +10,7 @@ import { SkillsContext } from '../../context/SkillsContext';
 import { PortfolioInfoContext } from '../../context/PortfolioInfoContext';
 import { WorkExperienceContext } from '../../context/WorkExperienceContext';
 import { StarBorderIcon } from '../../utils/MaterialIcons';
+import { calcYearsOfExperience } from '../../utils/config-util';
 
 const Home = (props) => {
   const [skills, setSkills] = useContext(SkillsContext);
@@ -34,7 +35,11 @@ const Home = (props) => {
       autoplay: true,
       path: 'images/programming-man.json'
     });
-  }, [])
+  }, []);
+
+  useEffect(() => {
+    let dff = calcYearsOfExperience(workExperience);
+  }, [workExperience]);
 
   return (
     <React.Fragment>
@@ -107,7 +112,7 @@ const Home = (props) => {
                             )
                           })}
                         </div>
-                        {index + 1 !== skill.length && <Divider />}
+                        {index + 1 !== skills.length && <Divider />}
                       </React.Fragment>
                     )
                   })
@@ -120,25 +125,22 @@ const Home = (props) => {
               <CardHeader title={'🌏 LANGUAGES'} />
               <Divider />
               <CardContent>
-                <div style={{ display: 'grid' }}>
-                  <span><strong>English:</strong> Full Professional Fluency</span>
-                  <Rating
-                    name="customized-empty"
-                    defaultValue={5}
-                    precision={0.5}
-                    emptyIcon={<StarBorderIcon fontSize="inherit" />}
-                  />
-                </div>
-                <Divider style={{ marginTop: 10, marginBottom: 10 }} />
-                <div style={{ display: 'grid' }}>
-                  <span><strong>Hindi:</strong> Native Speaker</span>
-                  <Rating
-                    name="customized-empty"
-                    defaultValue={5}
-                    precision={0.5}
-                    emptyIcon={<StarBorderIcon fontSize="inherit" />}
-                  />
-                </div>
+                {portfolioInfoStore.languages && portfolioInfoStore.languages.map((_language, index) => {
+                  return (
+                    <React.Fragment>
+                      <div style={{ display: 'grid' }}>
+                        <span><strong>{_language.lang_name}:</strong>&nbsp;{_language.expertise_level}</span>
+                        <Rating
+                          name="customized-empty"
+                          defaultValue={_language.rating}
+                          precision={0.5}
+                          emptyIcon={<StarBorderIcon fontSize="inherit" />}
+                        />
+                      </div>
+                      {index + 1 !== portfolioInfoStore.languages.length && <Divider style={{ marginTop: 10, marginBottom: 10 }} />}
+                    </React.Fragment>
+                  )
+                })}
               </CardContent>
             </Card>
           </Grid>
